@@ -3,27 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMPRONTA PRO</title>
+    <title>IMPRONTA PRO | Digital Footprint Intelligence</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            background-color: #111;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #030712;
+            color: #f8fafc;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            height: 100vh;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+        }
+        #canvas-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.6;
+        }
+        .container {
+            position: relative;
+            z-index: 10;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 24px;
+            padding: 3.5rem 4rem;
             text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            max-width: 90%;
+            width: 550px;
+        }
+        .logo-container {
+            margin-bottom: 2.5rem;
+        }
+        .logo-container svg {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.3));
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            color: #38bdf8;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #38bdf8;
+            animation: pulse 2s infinite;
         }
         h1 {
-            font-size: 3rem;
-            letter-spacing: 0.1em;
+            font-size: 1.3rem;
             font-weight: 300;
+            letter-spacing: 0.05em;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: #38bdf8;
+            vertical-align: middle;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.4; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.4; transform: scale(0.8); }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 2.5rem 1.5rem;
+            }
+            h1 {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>IMPRONTA PRO IS COMING...</h1>
+    <canvas id="canvas-bg"></canvas>
+    
+    <div class="container">
+        <div class="logo-container">
+            <!-- Inlined SVG, recolored -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="100%" height="100%">
+              <defs>
+                <linearGradient id="improntaGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#1e40af" />
+                  <stop offset="100%" stop-color="#38bdf8" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(10, 10)" stroke="url(#improntaGrad)" stroke-width="6" stroke-linecap="round" fill="none">
+                <path d="M 25,65 A 30,35 0 0,1 65,30 A 30,45 0 0,1 75,65" stroke-dasharray="2,2" stroke-width="4" opacity="0.7"/>
+                <path d="M 35,65 A 20,25 0 0,1 65,40 A 20,30 0 0,1 70,65" />
+                <path d="M 45,65 A 10,13 0 0,1 60,50 A 10,15 0 0,1 63,65" />
+                <path d="M 54,65 L 54,58" stroke-width="7" />
+                <circle cx="54" cy="54" r="2" fill="url(#improntaGrad)" />
+              </g>
+              <text x="100" y="58" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="34" fill="#ffffff">
+                impronta<tspan fill="url(#improntaGrad)" font-weight="400">.pro</tspan>
+              </text>
+              <text x="102" y="78" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="12" fill="#94a3b8" letter-spacing="1.5">
+                DIGITAL FOOTPRINT INTELLIGENCE
+              </text>
+            </svg>
+        </div>
+        
+        <div class="status-badge">
+            <div class="dot"></div>
+            STATUS: RECONNAISSANCE
+        </div>
+        
+        <h1 id="typewriter"></h1>
+    </div>
+
+    <script>
+        const text = "IMPRONTA PRO IS COMING...";
+        const el = document.getElementById('typewriter');
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < text.length) {
+                el.innerHTML = text.substring(0, i+1) + '<span class="cursor"></span>';
+                i++;
+                setTimeout(typeWriter, Math.random() * 80 + 40);
+            }
+        }
+        
+        setTimeout(typeWriter, 1200);
+
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        const config = {
+            particleCount: window.innerWidth < 768 ? 40 : 80,
+            connectionDistance: 130,
+            baseSpeed: 0.2,
+            color: '56, 189, 248'
+        };
+        
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * config.baseSpeed;
+                this.vy = (Math.random() - 0.5) * config.baseSpeed;
+                this.radius = Math.random() * 1.5 + 0.5;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${config.color}, 0.5)`;
+                ctx.fill();
+            }
+        }
+        
+        function init() {
+            resize();
+            particles = [];
+            for (let i = 0; i < config.particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < config.connectionDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        const opacity = 1 - (dist / config.connectionDistance);
+                        ctx.strokeStyle = `rgba(${config.color}, ${opacity * 0.2})`;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        
+        window.addEventListener('resize', () => {
+            resize();
+            init();
+        });
+        
+        init();
+        animate();
+    </script>
 </body>
 </html>
