@@ -11,7 +11,7 @@
             box-sizing: border-box;
         }
         body {
-            background-color: #030712;
+            background-color: #02040a;
             color: #f8fafc;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             height: 100vh;
@@ -27,19 +27,19 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            opacity: 0.6;
+            opacity: 1;
         }
         .container {
             position: relative;
             z-index: 10;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            background: rgba(10, 15, 28, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(56, 189, 248, 0.25);
             border-radius: 24px;
             padding: 3.5rem 4rem;
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255,255,255,0.1);
             max-width: 90%;
             width: 550px;
         }
@@ -50,27 +50,28 @@
             width: 100%;
             max-width: 280px;
             height: auto;
-            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.3));
+            filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4));
         }
         .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            padding: 6px 14px;
+            gap: 10px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 8px 16px;
             border-radius: 9999px;
             font-size: 0.75rem;
-            color: #38bdf8;
-            letter-spacing: 0.05em;
+            color: #7dd3fc;
+            letter-spacing: 0.08em;
             margin-bottom: 2rem;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
         }
         .dot {
             width: 8px;
             height: 8px;
             background-color: #38bdf8;
             border-radius: 50%;
-            box-shadow: 0 0 8px #38bdf8;
+            box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
             animation: pulse 2s infinite;
         }
         h1 {
@@ -79,6 +80,7 @@
             letter-spacing: 0.05em;
             color: #e2e8f0;
             line-height: 1.5;
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
         }
         .cursor {
             display: inline-block;
@@ -87,13 +89,14 @@
             background-color: #38bdf8;
             vertical-align: middle;
             margin-left: 4px;
+            box-shadow: 0 0 8px #38bdf8;
             animation: blink 1s step-end infinite;
         }
         
         @keyframes pulse {
-            0% { opacity: 0.4; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-            100% { opacity: 0.4; transform: scale(0.8); }
+            0% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.3); }
+            100% { opacity: 0.3; transform: scale(0.8); }
         }
         @keyframes blink {
             0%, 100% { opacity: 1; }
@@ -115,16 +118,15 @@
     
     <div class="container">
         <div class="logo-container">
-            <!-- Inlined SVG, recolored -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="100%" height="100%">
               <defs>
                 <linearGradient id="improntaGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#1e40af" />
-                  <stop offset="100%" stop-color="#38bdf8" />
+                  <stop offset="0%" stop-color="#38bdf8" />
+                  <stop offset="100%" stop-color="#7dd3fc" />
                 </linearGradient>
               </defs>
               <g transform="translate(10, 10)" stroke="url(#improntaGrad)" stroke-width="6" stroke-linecap="round" fill="none">
-                <path d="M 25,65 A 30,35 0 0,1 65,30 A 30,45 0 0,1 75,65" stroke-dasharray="2,2" stroke-width="4" opacity="0.7"/>
+                <path d="M 25,65 A 30,35 0 0,1 65,30 A 30,45 0 0,1 75,65" stroke-dasharray="2,2" stroke-width="4" opacity="0.8"/>
                 <path d="M 35,65 A 20,25 0 0,1 65,40 A 20,30 0 0,1 70,65" />
                 <path d="M 45,65 A 10,13 0 0,1 60,50 A 10,15 0 0,1 63,65" />
                 <path d="M 54,65 L 54,58" stroke-width="7" />
@@ -159,20 +161,31 @@
                 setTimeout(typeWriter, Math.random() * 80 + 40);
             }
         }
-        
         setTimeout(typeWriter, 1200);
 
+        // Premium Canvas Animation
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         
         let width, height;
         let particles = [];
         const config = {
-            particleCount: window.innerWidth < 768 ? 40 : 80,
-            connectionDistance: 130,
-            baseSpeed: 0.2,
-            color: '56, 189, 248'
+            particleCount: window.innerWidth < 768 ? 60 : 120, // Increased nodes
+            connectionDistance: 160, // Increased connection radius
+            baseSpeed: 0.25,
+            color: '56, 189, 248' // Sky blue
         };
+        
+        // Mouse interaction
+        let mouse = { x: null, y: null, radius: 200 };
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
         
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -185,19 +198,37 @@
                 this.y = Math.random() * height;
                 this.vx = (Math.random() - 0.5) * config.baseSpeed;
                 this.vy = (Math.random() - 0.5) * config.baseSpeed;
-                this.radius = Math.random() * 1.5 + 0.5;
+                this.radius = Math.random() * 2 + 1; // Thicker nodes
+                this.baseAlpha = Math.random() * 0.5 + 0.3;
             }
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
+                
+                // Repel slightly from mouse
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < mouse.radius) {
+                        const forceDirectionX = dx / dist;
+                        const forceDirectionY = dy / dist;
+                        const force = (mouse.radius - dist) / mouse.radius;
+                        this.x -= forceDirectionX * force * 1.5;
+                        this.y -= forceDirectionY * force * 1.5;
+                    }
+                }
             }
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${config.color}, 0.5)`;
+                ctx.fillStyle = `rgba(${config.color}, ${this.baseAlpha})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = `rgba(${config.color}, 0.8)`;
                 ctx.fill();
+                ctx.shadowBlur = 0; 
             }
         }
         
@@ -216,6 +247,7 @@
                 particles[i].update();
                 particles[i].draw();
                 
+                // Connect particles
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
@@ -225,8 +257,25 @@
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
-                        const opacity = 1 - (dist / config.connectionDistance);
-                        ctx.strokeStyle = `rgba(${config.color}, ${opacity * 0.2})`;
+                        const opacity = (1 - (dist / config.connectionDistance)) * 0.4; // Stronger lines
+                        ctx.strokeStyle = `rgba(${config.color}, ${opacity})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+                
+                // Connect to mouse
+                if (mouse.x != null) {
+                    const dx = particles[i].x - mouse.x;
+                    const dy = particles[i].y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        const opacity = (1 - (dist / mouse.radius)) * 0.5;
+                        ctx.strokeStyle = `rgba(${config.color}, ${opacity})`;
+                        ctx.lineWidth = 1.5;
                         ctx.stroke();
                     }
                 }
