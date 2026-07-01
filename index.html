@@ -92,6 +92,49 @@
             box-shadow: 0 0 8px #38bdf8;
             animation: blink 1s step-end infinite;
         }
+
+        .contact-line {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(56, 189, 248, 0.15);
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeSlideUp 0.8s ease-out 4s forwards;
+        }
+        .contact-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #7dd3fc;
+            text-decoration: none;
+            padding: 8px 20px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 9999px;
+            background: rgba(56, 189, 248, 0.06);
+            transition: all 0.3s ease;
+            letter-spacing: 0.03em;
+        }
+        .contact-email:hover {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.2);
+            color: #bae6fd;
+            transform: translateY(-1px);
+        }
+        .contact-email svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
         
         @keyframes pulse {
             0% { opacity: 0.3; transform: scale(0.8); }
@@ -102,6 +145,12 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         
         @media (max-width: 640px) {
             .container {
@@ -109,6 +158,10 @@
             }
             h1 {
                 font-size: 1.1rem;
+            }
+            .contact-email {
+                font-size: 0.75rem;
+                padding: 7px 14px;
             }
         }
     </style>
@@ -147,6 +200,14 @@
         </div>
         
         <h1 id="typewriter"></h1>
+
+        <div class="contact-line">
+            <p class="contact-label">For further information</p>
+            <a href="mailto:info@impronta.pro" class="contact-email">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                info@impronta.pro
+            </a>
+        </div>
     </div>
 
     <script>
@@ -163,20 +224,18 @@
         }
         setTimeout(typeWriter, 1200);
 
-        // Premium Canvas Animation
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         
         let width, height;
         let particles = [];
         const config = {
-            particleCount: window.innerWidth < 768 ? 60 : 120, // Increased nodes
-            connectionDistance: 160, // Increased connection radius
+            particleCount: window.innerWidth < 768 ? 60 : 120,
+            connectionDistance: 160,
             baseSpeed: 0.25,
-            color: '56, 189, 248' // Sky blue
+            color: '56, 189, 248'
         };
         
-        // Mouse interaction
         let mouse = { x: null, y: null, radius: 200 };
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.x;
@@ -198,7 +257,7 @@
                 this.y = Math.random() * height;
                 this.vx = (Math.random() - 0.5) * config.baseSpeed;
                 this.vy = (Math.random() - 0.5) * config.baseSpeed;
-                this.radius = Math.random() * 2 + 1; // Thicker nodes
+                this.radius = Math.random() * 2 + 1;
                 this.baseAlpha = Math.random() * 0.5 + 0.3;
             }
             update() {
@@ -207,7 +266,6 @@
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
                 
-                // Repel slightly from mouse
                 if (mouse.x != null) {
                     let dx = mouse.x - this.x;
                     let dy = mouse.y - this.y;
@@ -224,9 +282,9 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${config.color}, ${this.baseAlpha})`;
+                ctx.fillStyle = 'rgba(' + config.color + ', ' + this.baseAlpha + ')';
                 ctx.shadowBlur = 10;
-                ctx.shadowColor = `rgba(${config.color}, 0.8)`;
+                ctx.shadowColor = 'rgba(' + config.color + ', 0.8)';
                 ctx.fill();
                 ctx.shadowBlur = 0; 
             }
@@ -247,7 +305,6 @@
                 particles[i].update();
                 particles[i].draw();
                 
-                // Connect particles
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
@@ -257,14 +314,13 @@
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
-                        const opacity = (1 - (dist / config.connectionDistance)) * 0.4; // Stronger lines
-                        ctx.strokeStyle = `rgba(${config.color}, ${opacity})`;
+                        const opacity = (1 - (dist / config.connectionDistance)) * 0.4;
+                        ctx.strokeStyle = 'rgba(' + config.color + ', ' + opacity + ')';
                         ctx.lineWidth = 1;
                         ctx.stroke();
                     }
                 }
                 
-                // Connect to mouse
                 if (mouse.x != null) {
                     const dx = particles[i].x - mouse.x;
                     const dy = particles[i].y - mouse.y;
@@ -274,7 +330,7 @@
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(mouse.x, mouse.y);
                         const opacity = (1 - (dist / mouse.radius)) * 0.5;
-                        ctx.strokeStyle = `rgba(${config.color}, ${opacity})`;
+                        ctx.strokeStyle = 'rgba(' + config.color + ', ' + opacity + ')';
                         ctx.lineWidth = 1.5;
                         ctx.stroke();
                     }
@@ -291,6 +347,5 @@
         init();
         animate();
     </script>
-<!-- trigger ssl -->
 </body>
 </html>
