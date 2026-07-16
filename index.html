@@ -10,5 +10,32 @@ function a0_0x5460(_0x329a53,_0x47ccf4){_0x329a53=_0x329a53-0xae;const _0x11ddad
     </script>
 </head>
 <body>
+<div id="waitlist-container" style="position:fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 999999; background: rgba(0,0,0,0.85); padding: 15px 25px; border-radius: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); color: white; font-family: sans-serif; display: flex; align-items: center; gap: 10px;">
+  <span style="font-weight: 500; font-size: 14px; white-space: nowrap;">Early Access</span>
+  <input type="email" id="waitlist-email" placeholder="Inserisci la tua email" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 8px 15px; color: white; outline: none; font-size: 14px; width: 200px;">
+  <button onclick="submitWaitlist()" style="background: white; color: black; border: none; border-radius: 20px; padding: 8px 15px; font-weight: bold; cursor: pointer; font-size: 14px;">Unisciti</button>
+</div>
+<script>
+  async function submitWaitlist() {
+    const email = document.getElementById('waitlist-email').value;
+    if(!email || !email.includes('@')) return;
+    const btn = document.querySelector('#waitlist-container button');
+    btn.innerText = 'Invio...';
+    try {
+      const res = await fetch('https://impronta-counter.elenakisrl.workers.dev/waitlist', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email})
+      });
+      if(res.ok) {
+        document.getElementById('waitlist-container').innerHTML = '<span style="color:#4ADE80; font-size: 14px; font-weight: bold;">✓ Aggiunto alla waitlist! Ti contatteremo a breve.</span>';
+      } else {
+        btn.innerText = 'Riprova';
+      }
+    } catch(e) {
+      btn.innerText = 'Errore';
+    }
+  }
+</script>
 </body>
 </html>
