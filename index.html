@@ -109,13 +109,15 @@
       text-decoration: none;
     }
 
-    .brand-svg {
-      height: 38px;
+    .brand-img {
+      height: 48px;
       width: auto;
+      max-width: 240px;
+      object-fit: contain;
       transition: opacity 0.2s ease;
     }
 
-    .brand-logo:hover .brand-svg {
+    .brand-logo:hover .brand-img {
       opacity: 0.9;
     }
 
@@ -463,24 +465,7 @@
     <!-- Navbar Header -->
     <header>
       <a href="#" class="brand-logo" aria-label="Impronta PRO Home">
-        <svg class="brand-svg" viewBox="0 0 380 90" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="logoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#3d74ac" />
-              <stop offset="100%" stop-color="#c99e5e" />
-            </linearGradient>
-          </defs>
-          <g transform="translate(10, 10)" stroke="url(#logoGrad)" stroke-width="5.5" stroke-linecap="round" fill="none">
-            <path d="M 25,65 A 30,35 0 0,1 65,30 A 30,45 0 0,1 75,65" stroke-dasharray="2,2" stroke-width="3.5" opacity="0.85"/>
-            <path d="M 35,65 A 20,25 0 0,1 65,40 A 20,30 0 0,1 70,65" />
-            <path d="M 45,65 A 10,13 0 0,1 60,50 A 10,15 0 0,1 63,65" />
-            <path d="M 54,65 L 54,58" stroke-width="6" />
-            <circle cx="54" cy="54" r="2.5" fill="url(#logoGrad)" />
-          </g>
-          <text x="96" y="52" font-family="'Inter', sans-serif" font-weight="700" font-size="34" fill="#ffffff">
-            impronta<tspan fill="url(#logoGrad)" font-weight="400">.pro</tspan>
-          </text>
-        </svg>
+        <img src="Improntapro_Logo_official.png" alt="Impronta PRO" class="brand-img">
       </a>
 
       <div class="header-badges">
