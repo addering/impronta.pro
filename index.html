@@ -456,7 +456,7 @@
       height: 100%;
       background: linear-gradient(90deg, var(--navy), var(--good));
       border-radius: 4px;
-      transition: width 5s linear;
+      transition: width 12s linear;
     }
 
     .success-timer-text {
@@ -859,13 +859,13 @@
         // Show & animate success view
         successView.classList.add('active');
         
-        // Start 5s timer progress bar
+        // Start 12s timer progress bar
         requestAnimationFrame(() => {
           successTimerBar.style.width = '100%';
         });
 
-        // 5-second countdown timer
-        let timeLeft = 5;
+        // 12-second countdown timer
+        let timeLeft = 12;
         timerCountdown.textContent = timeLeft;
 
         if (countdownInterval) clearInterval(countdownInterval);
@@ -879,11 +879,11 @@
           }
         }, 1000);
 
-        // Auto Reset after 5 seconds (5000ms)
+        // Auto Reset after 12 seconds (12000ms)
         if (resetTimerTimeout) clearTimeout(resetTimerTimeout);
         resetTimerTimeout = setTimeout(() => {
           resetToOriginalFormState();
-        }, 5100);
+        }, 12100);
 
       }, 350);
     }
@@ -902,7 +902,7 @@
         
         // Re-enable smooth transition for future bar animations
         setTimeout(() => {
-          successTimerBar.style.transition = 'width 5s linear';
+          successTimerBar.style.transition = 'width 12s linear';
         }, 50);
 
         // Fade in form state content
