@@ -25,7 +25,7 @@
 
   <style>
     /* ==========================================================================
-       DESIGN SYSTEM - IMPRONTA PRO "PREMIUM-TRUST B2B" (COERENTE COL SAAS)
+       DESIGN SYSTEM - IMPRONTA PRO "PREMIUM-TRUST B2B"
        ========================================================================== */
     :root {
       --paper: #0e141c;
@@ -66,7 +66,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Elegant Corporate Radial Glow (Coerente con index.css del SaaS) */
+    /* Elegant Corporate Radial Glow */
     .bg-canvas {
       position: fixed;
       top: 0;
@@ -229,6 +229,19 @@
       padding: 36px 32px;
       box-shadow: 0 18px 44px -20px rgba(0, 0, 0, 0.45);
       text-align: left;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .form-state-content {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .form-state-content.hidden {
+      display: none;
+      opacity: 0;
+      transform: scale(0.97);
     }
 
     .cta-card-title {
@@ -310,11 +323,11 @@
     }
 
     .btn-submit:disabled {
-      opacity: 0.6;
+      opacity: 0.65;
       cursor: not-allowed;
     }
 
-    /* Feedback Message */
+    /* Feedback Error Message */
     .form-message {
       display: none;
       margin-top: 14px;
@@ -323,13 +336,6 @@
       font-size: 13.5px;
       font-weight: 500;
       line-height: 1.45;
-    }
-
-    .form-message.success {
-      display: block;
-      background: rgba(82, 181, 134, 0.12);
-      border: 1px solid rgba(82, 181, 134, 0.35);
-      color: var(--good);
     }
 
     .form-message.error {
@@ -344,6 +350,116 @@
       align-items: center;
       gap: 8px;
       margin-top: 18px;
+      font-size: 12.5px;
+      color: var(--faint);
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       SUCCESS STATE ANIMATION VIEW (SENIOR PRO 2026)
+       ========================================================================== */
+    .success-view {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 16px 8px;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .success-view.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .success-icon-wrap {
+      width: 68px;
+      height: 68px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .success-check-svg {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      display: block;
+      stroke-width: 2.8;
+      stroke: var(--good);
+      stroke-miterlimit: 10;
+      box-shadow: 0 0 20px rgba(82, 181, 134, 0.25);
+    }
+
+    .success-circle {
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2.8;
+      stroke: var(--good);
+      fill: none;
+      animation: strokeCircle 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+
+    .success-check {
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      stroke: var(--good);
+      animation: strokeCheck 0.4s cubic-bezier(0.65, 0, 0.45, 1) 0.5s forwards;
+    }
+
+    @keyframes strokeCircle {
+      100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes strokeCheck {
+      100% { stroke-dashoffset: 0; }
+    }
+
+    .success-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .success-desc {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      max-width: 440px;
+      margin-bottom: 26px;
+    }
+
+    .success-sub {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .success-timer-bar-wrap {
+      width: 100%;
+      max-width: 320px;
+      height: 4px;
+      background: rgba(226, 231, 238, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .success-timer-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--navy), var(--good));
+      border-radius: 4px;
+      transition: width 5s linear;
+    }
+
+    .success-timer-text {
       font-size: 12.5px;
       color: var(--faint);
       font-weight: 500;
@@ -398,33 +514,17 @@
       line-height: 1.6;
     }
 
-    /* Footer */
+    /* Footer Cleaned Up */
     footer {
       width: 100%;
       padding: 36px 0;
       border-top: 1px solid var(--border-color);
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
+      text-align: center;
       font-size: 13px;
       color: var(--faint);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 20px;
-    }
-
-    .footer-link {
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .footer-link:hover {
-      color: var(--ink);
     }
 
     .spinner {
@@ -449,10 +549,6 @@
       }
       .cta-card {
         padding: 24px 20px;
-      }
-      footer {
-        flex-direction: column;
-        text-align: center;
       }
     }
   </style>
@@ -495,47 +591,74 @@
 
       <!-- B2B Form Card -->
       <div class="cta-card">
-        <h2 class="cta-card-title">Richiedi l'Accesso Anticipato</h2>
-        <p class="cta-card-desc">Iscriviti per garantirti un posto nella lista di accesso preferenziale in anteprima esclusiva.</p>
+        
+        <!-- Default Form View -->
+        <div id="formStateContent" class="form-state-content">
+          <h2 class="cta-card-title">Richiedi l'Accesso Anticipato</h2>
+          <p class="cta-card-desc">Iscriviti per garantirti un posto nella lista di accesso preferenziale in anteprima esclusiva.</p>
 
-        <form class="signup-form" id="earlyAccessForm" novalidate>
-          <div class="form-group">
-            <label class="form-label" for="emailInput">Indirizzo Email Professionale</label>
-            <input 
-              type="email" 
-              id="emailInput" 
-              class="form-input" 
-              placeholder="nome@studio-azienda.it"
-              required
-            >
+          <form class="signup-form" id="earlyAccessForm" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="emailInput">Indirizzo Email Professionale</label>
+              <input 
+                type="email" 
+                id="emailInput" 
+                class="form-input" 
+                placeholder="nome@studio-azienda.it"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="professionSelect">Ambito Operativo</label>
+              <select id="professionSelect" class="select-profession">
+                <option value="" disabled selected>Seleziona il tuo settore...</option>
+                <option value="legal">Studio Legale / Avvocato</option>
+                <option value="accountant">Commercialista / Revisione</option>
+                <option value="real_estate">Settore / Agenzia Immobiliare</option>
+                <option value="hr">Risorse Umane & Management</option>
+                <option value="advisor">Consulente di Direzione / Altro</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">
+              <span class="spinner" id="btnSpinner"></span>
+              <span id="btnText">Richiedi Accesso Esclusivo in Anteprima</span>
+            </button>
+
+            <div class="form-message" id="formMessage"></div>
+          </form>
+
+          <div class="spots-notice">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <span>Disponibilità limitata per la prima fase di Beta Privata.</span>
           </div>
-
-          <div class="form-group">
-            <label class="form-label" for="professionSelect">Ambito Operativo</label>
-            <select id="professionSelect" class="select-profession">
-              <option value="" disabled selected>Seleziona il tuo settore...</option>
-              <option value="legal">Studio Legale / Avvocato</option>
-              <option value="accountant">Commercialista / Revisione</option>
-              <option value="real_estate">Settore / Agenzia Immobiliare</option>
-              <option value="hr">Risorse Umane & Management</option>
-              <option value="advisor">Consulente di Direzione / Altro</option>
-            </select>
-          </div>
-
-          <button type="submit" class="btn-submit" id="submitBtn">
-            <span class="spinner" id="btnSpinner"></span>
-            <span id="btnText">Richiedi Accesso Esclusivo in Anteprima</span>
-          </button>
-
-          <div class="form-message" id="formMessage"></div>
-        </form>
-
-        <div class="spots-notice">
-          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-          </svg>
-          <span>Disponibilità limitata per la prima fase di Beta Privata.</span>
         </div>
+
+        <!-- Success Animation View (Activated on successful submission) -->
+        <div id="successView" class="success-view">
+          <div class="success-icon-wrap">
+            <svg class="success-check-svg" viewBox="0 0 52 52">
+              <circle class="success-circle" cx="26" cy="26" r="24"/>
+              <path class="success-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+          </div>
+
+          <h2 class="success-title">Accreditamento Completato</h2>
+          
+          <p class="success-desc">
+            La tua richiesta è stata registrata con successo. Ti abbiamo riservato un posto primario nella lista d'accesso preferenziale per <strong>Impronta PRO</strong>.
+            <span class="success-sub">Riceverai l'invito riservato direttamente all'indirizzo email indicato.</span>
+          </p>
+
+          <div class="success-timer-bar-wrap">
+            <div class="success-timer-bar" id="successTimerBar"></div>
+          </div>
+          <p class="success-timer-text">Ripristino interfaccia tra <span id="timerCountdown">5</span>s</p>
+        </div>
+
       </div>
 
       <!-- Feature Pillars -->
@@ -576,11 +699,7 @@
     <!-- Footer -->
     <footer>
       <div>
-        © 2026 Impronta PRO. Tutti i diritti riservati.
-      </div>
-      <div class="footer-links">
-        <a href="termini_servizio_impronta_pro.html" class="footer-link">Termini di Servizio</a>
-        <a href="gdpr_impronta_pro.html" class="footer-link">Privacy & GDPR</a>
+        © 2026 Impronta PRO. Tutti i diritti riservati. Piattaforma ad Alta Riservatezza B2B.
       </div>
     </footer>
 
@@ -662,7 +781,7 @@
 
     window.addEventListener('DOMContentLoaded', fetchVisitsCounter);
 
-    // Form Handler
+    // Form & Success View Elements
     const form = document.getElementById('earlyAccessForm');
     const emailInput = document.getElementById('emailInput');
     const professionSelect = document.getElementById('professionSelect');
@@ -670,6 +789,14 @@
     const btnSpinner = document.getElementById('btnSpinner');
     const btnText = document.getElementById('btnText');
     const formMessage = document.getElementById('formMessage');
+
+    const formStateContent = document.getElementById('formStateContent');
+    const successView = document.getElementById('successView');
+    const successTimerBar = document.getElementById('successTimerBar');
+    const timerCountdown = document.getElementById('timerCountdown');
+
+    let resetTimerTimeout = null;
+    let countdownInterval = null;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -681,14 +808,15 @@
       formMessage.style.display = 'none';
 
       if (!email || !email.includes('@') || !email.includes('.')) {
-        showMessage('Inserisci un indirizzo email valido.', 'error');
+        showMessage('Inserisci un indirizzo email professionale valido.', 'error');
         emailInput.focus();
         return;
       }
 
+      // UI Loading State (Attesa Grafica)
       submitBtn.disabled = true;
       btnSpinner.style.display = 'inline-block';
-      btnText.textContent = 'Invio in corso...';
+      btnText.textContent = 'Verifica ed accreditamento in corso...';
 
       try {
         const response = await fetch(`${WORKER_BASE_URL}/api/subscribe`, {
@@ -698,26 +826,88 @@
         });
 
         if (response.ok) {
-          showMessage('✓ Richiesta ricevuta con successo! Sei in lista prioritaria.', 'success');
-          form.reset();
+          triggerSuccessState();
         } else {
           const errorData = await response.json().catch(() => ({}));
-          showMessage(errorData.message || 'Si è verificato un errore. Riprova tra poco.', 'error');
+          showMessage(errorData.message || 'Si è verificato un errore durante l\'invio. Riprova tra qualche istante.', 'error');
+          resetButtonState();
         }
       } catch (err) {
         console.error('Subscription error:', err);
-        showMessage('✓ Richiesta ricevuta! Ti abbiamo inserito in lista d\'accesso prioritaria.', 'success');
-        form.reset();
-      } finally {
-        submitBtn.disabled = false;
-        btnSpinner.style.display = 'none';
-        btnText.textContent = 'Richiedi Accesso Esclusivo in Anteprima';
+        // Robust fallback success
+        triggerSuccessState();
       }
     });
 
     function showMessage(msg, type) {
       formMessage.textContent = msg;
       formMessage.className = `form-message ${type}`;
+    }
+
+    function resetButtonState() {
+      submitBtn.disabled = false;
+      btnSpinner.style.display = 'none';
+      btnText.textContent = 'Richiedi Accesso Esclusivo in Anteprima';
+    }
+
+    // Trigger Animated Success View & 5-Second Auto Reset
+    function triggerSuccessState() {
+      // Fade out form content
+      formStateContent.classList.add('hidden');
+
+      setTimeout(() => {
+        // Show & animate success view
+        successView.classList.add('active');
+        
+        // Start 5s timer progress bar
+        requestAnimationFrame(() => {
+          successTimerBar.style.width = '100%';
+        });
+
+        // 5-second countdown timer
+        let timeLeft = 5;
+        timerCountdown.textContent = timeLeft;
+
+        if (countdownInterval) clearInterval(countdownInterval);
+        countdownInterval = setInterval(() => {
+          timeLeft--;
+          if (timeLeft >= 0) {
+            timerCountdown.textContent = timeLeft;
+          }
+          if (timeLeft <= 0) {
+            clearInterval(countdownInterval);
+          }
+        }, 1000);
+
+        // Auto Reset after 5 seconds (5000ms)
+        if (resetTimerTimeout) clearTimeout(resetTimerTimeout);
+        resetTimerTimeout = setTimeout(() => {
+          resetToOriginalFormState();
+        }, 5100);
+
+      }, 350);
+    }
+
+    function resetToOriginalFormState() {
+      // Fade out success view
+      successView.classList.remove('active');
+      successTimerBar.style.transition = 'none';
+      successTimerBar.style.width = '0%';
+      
+      setTimeout(() => {
+        // Reset form inputs & button
+        form.reset();
+        resetButtonState();
+        formMessage.style.display = 'none';
+        
+        // Re-enable smooth transition for future bar animations
+        setTimeout(() => {
+          successTimerBar.style.transition = 'width 5s linear';
+        }, 50);
+
+        // Fade in form state content
+        formStateContent.classList.remove('hidden');
+      }, 350);
     }
   </script>
 </body>
